@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación a una cita</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .invitation {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+        }
+        .invitation h1 {
+            color: #ff7f50;
+        }
+        .invitation p {
+            color: #555;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .yes {
+            background-color: #4caf50;
+            color: white;
+        }
+        .no {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+        }
+    </style>
+    <script>
+        function abrirPaginaCompleta() {
+            const nuevaVentana = window.open("", "_blank", "width=" + screen.availWidth + ",height=" + screen.availHeight + ",left=0,top=0");
+            nuevaVentana.document.write(`
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>¡Gracias!</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            background-color: #f9f9f9;
+                            margin: 0;
+                            padding: 20px;
+                            text-align: center;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                        }
+                        h1 {
+                            color: #4caf50;
+                        }
+                        p {
+                            color: #555;
+                        }
+                        img {
+                            margin-top: 20px;
+                            width: 100%;
+                            max-width: 600px;
+                            border-radius: 10px;
+                        }
+                    </style>
+                </head>
+                <body>
+                   <h1 style="position: absolute; top: 50px; left: 100px; font-size: 25px;">¡Gracias por aceptar Dordita! sabia que ibas aceptar 😊</h1>
+
+
+                    <p style="font-size: 50px; font-weight: bold;">jajaja para que quede como el mono sentado esperando. Ja mentira  😂</p>
+                    <img src="mono-esperando.gif" alt="">
+                </body>
+                </html>
+            `);
+        }
+
+        function moverBotonNoAleatoriamente() {
+            const boton = document.querySelector('.no');
+            const maxX = window.innerWidth - boton.offsetWidth;
+            const maxY = window.innerHeight - boton.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            boton.style.left = `${randomX}px`;
+            boton.style.top = `${randomY}px`;
+        }
+
+        function alejarBotonNo(event) {
+            const boton = event.target;
+            const botonRect = boton.getBoundingClientRect();
+
+            const centerX = botonRect.left + botonRect.width / 2;
+            const centerY = botonRect.top + botonRect.height / 2;
+
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            const distanceX = centerX - mouseX;
+            const distanceY = centerY - mouseY;
+
+            const moveX = distanceX > 0 ? 50 : -50;
+            const moveY = distanceY > 0 ? 50 : -50;
+
+            const newLeft = Math.min(Math.max(boton.offsetLeft + moveX, 0), window.innerWidth - boton.offsetWidth);
+            const newTop = Math.min(Math.max(boton.offsetTop + moveY, 0), window.innerHeight - boton.offsetHeight);
+
+            boton.style.left = `${newLeft}px`;
+            boton.style.top = `${newTop}px`;
+        }
+    </script>
+</head>
+<body>
+    <div class="invitation">
+        <h1>💪 Invitación Especial 💓</h1>
+        <p>¡Hola! Me encantaría invitarte a salir para hacer ejercicio que dices niña.</p>
+        <p class="details">📍 Lugar: En el porque del oriente<br>⏰ Hora: 11:00 AM<br>📅 Fecha: 29 de marzo</p>
+        <p>Espero que puedas asistir. ¡Será muy especial!</p>
+        <button class="yes" onclick="abrirPaginaCompleta()">Sí</button>
+        <button class="no" onclick="moverBotonNoAleatoriamente()" onmouseover="alejarBotonNo(event)">No</button>
+    </div>
+</body>
+</html>
